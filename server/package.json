@@ -11,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@clerk/express": "^2.1.79",
+    "cors": "^2.8.6",
     "express": "^5.3.0",
     "pg": "^8.23.1"
   }
