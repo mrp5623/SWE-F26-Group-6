@@ -1,0 +1,14 @@
+{
+  "name": "nutrigator",
+  "private": true,
+  "workspaces": ["client"],
+  "scripts": {
+    "dev": "npm run dev --workspace client --",
+    "build": "npm run build --workspace client --",
+    "lint": "npm run lint --workspace client --",
+    "preview": "npm run preview --workspace client --",
+    "test": "npm run test --workspace client --",
+    "test:ui": "npm run test:ui --workspace client --"
+  },
+  "engines": { "node": ">=22.12.0" }
+}
