@@ -28,14 +28,26 @@ test("GET /profile returns empty fields for a new user", async () => {
   assert.equal(res.body.weight_kg, null);
 });
 
+test("GET /profile/goals returns 404 when the profile is incomplete", async () => {
+  const res = await request(app).get("/profile/goals");
+  assert.equal(res.status, 404);
+  assert.equal(res.body.error, "Complete your profile to get goals");
+});
+
 test("PUT /profile saves the profile and GET returns it", async () => {
-  const profile = {height_cm: 180, weight_kg: 80, age: 20, sex: "male", goal: "maintain"};
+  const profile = {height_cm: 172, weight_kg: 60, age: 21, sex: "male", goal: "maintain"};
 
   const putRes = await request(app).put("/profile").send(profile);
   assert.equal(putRes.status, 200);
 
   const getRes = await request(app).get("/profile");
   assert.deepEqual(getRes.body, { ...profile, role: "member" });
+});
+
+test("GET /profile/goals calculates goals from the saved profile", async () => {
+  const res = await request(app).get("/profile/goals");
+  assert.equal(res.status, 200);
+  assert.equal(res.body.calories, 2205);
 });
 
 test("PUT /profile with an invalid goal returns 400", async () => {
