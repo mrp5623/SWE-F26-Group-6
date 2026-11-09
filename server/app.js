@@ -19,7 +19,7 @@ app.get("/test", async (req, res) => {
 });
 
 app.get("/me", requireUser, (req, res) => {
-  res.json({ userId: req.userId, role: req.role });
+  res.json({ userId: req.userId, role: req.userRole });
 });
 
 app.get("/admin/test", requireUser, requireAdmin, (req, res) => {
