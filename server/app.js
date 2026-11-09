@@ -26,4 +26,9 @@ app.get("/admin/test", requireUser, requireAdmin, (req, res) => {
   res.json({ ok: true });
 });
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
 module.exports = app;
