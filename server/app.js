@@ -4,12 +4,14 @@ const { clerkMiddleware } = require("@clerk/express");
 const cors = require("cors");
 const { requireUser, requireAdmin } = require("./middleware/auth");
 const profileRouter = require("./routes/profile");
+const foodsRouter = require("./routes/foods");
 
 const app = express(); //create the server
 app.use(cors());
 app.use(express.json()); //read JSON request bodies into req.body
 app.use(clerkMiddleware());
 app.use("/profile", requireUser, profileRouter);
+app.use("/foods", requireUser, foodsRouter);
 
 app.get("/test", async (req, res) => {
   const result = await pool.query("SELECT now()");
