@@ -13,11 +13,13 @@ async function requireUser(req, res, next) {
         return;
     }
 
-    let result = await pool.query("SELECT role from users where clerk_id = $1", [userId]);
-    
-    if (result.rows.length == 0){
-        result = await pool.query("INSERT INTO users (clerk_id, role) VALUES ($1, 'member') RETURNING id, role", [userId]);
-    }
+    let result = await pool.query(
+        `INSERT INTO users (clerk_id, role) VALUES ($1, 'member')
+        ON CONFLICT (clerk_id) DO UPDATE SET clerk_id = EXCLUDED.clerk_id
+        RETURNING id, role`,
+        [userId]
+    );
+
 
     req.userId = result.rows[0].id;
     req.userRole = result.rows[0].role;
